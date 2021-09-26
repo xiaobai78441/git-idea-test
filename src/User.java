@@ -36,12 +36,47 @@ public class User extends Person implements Operate{
 
     @Override
     public void add(Book[] books) {
+        System.out.println("请输入要还的书籍的名称：");
+        String name = scanner.next();
 
+        if (name != null){
+            boolean flag = true;
+            int i = 0;
+            while(flag){
+                if (books[i].getName().equals(name)){
+                    if (!books[i].isState()){
+                        books[i].setState(true);
+                        System.out.println("还书成功");
+                        flag = false;
+                    }else{
+                        System.out.println("该书籍已被还回");
+                        break;
+                    }
+                }
+            }
+        }
     }
 
+    /*
+    *   用户借书
+    **/
     @Override
     public void delete(Book[] books) {
-
+        System.out.println("请输入你需要借的书名：");
+        String str = scanner.next();
+        if (str != null){
+            for (int i=0;i<books.length;i++){
+                if (books[i].getName().equals(str)){
+                    if (!books[i].isState()){
+                        System.out.println(str + "这本书籍已被借出！");
+                    }else {
+                        books[i].setState(false);
+                        System.out.println("借阅成功");
+                    }
+                    break;
+                }
+            }
+        }
     }
 
     @Override
@@ -75,8 +110,18 @@ public class User extends Person implements Operate{
 
     @Override
     public void list(Book[] books) {
-
+        System.out.println("书籍列表如下");
+        for (int i=0;i< books.length;i++){
+            if (books[i] != null){
+                if(books[i].getPrice() != 0){
+                    System.out.println(
+                            "【书名】：" + "【" + books[i].getName() + "】"+ "\n" +
+                                    "【作者】：" + "【"  + books[i].getAutuor() +"】"+"\n" +
+                                    "【分类】：" + "【"  + books[i].getCategory() +"】"+"\n" +
+                                    "【价格】：" + "【"  + books[i].getPrice() +"】"+"\n" +
+                                    "【状态】：" + "【"  + books[i].isState() + "】");
+                }
+            }
+        }
     }
-
-
 }
